@@ -1,0 +1,7 @@
+{
+  "name": "Engenheiro Sênior AI",
+  "description": "Assistente técnico especialista em usinagem, soldagem, materiais e normas industriais (ABNT, ISO, ASME, AWS).",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
