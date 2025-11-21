@@ -81,6 +81,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, activeFilters })
   // Simple parser to highlight specific technical sections returned by the AI
   const renderBotResponse = (text: string) => {
     // Split by the known headers defined in the system prompt
+    // Note: Updated Regex to catch the new headers
     const sections = text.split(/(?=## \d\. )/g);
 
     return (
@@ -95,21 +96,22 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, activeFilters })
           let Icon = Activity;
           let filterKey: FilterKey | null = null;
 
-          if (trimmed.startsWith('## 1. Análise Técnica')) {
-             title = "Análise Técnica";
-             content = trimmed.replace('## 1. Análise Técnica', '').trim();
-             variant = 'info';
-             Icon = Cpu;
-             filterKey = 'analise';
-          } else if (trimmed.startsWith('## 2. Aplicação de Normas')) {
-             title = "Aplicação de Normas";
-             content = trimmed.replace('## 2. Aplicação de Normas', '').trim();
+          // Matching new Prompt Headers
+          if (trimmed.startsWith('## 1. Interpretação Normativa')) {
+             title = "Interpretação Normativa";
+             content = trimmed.replace('## 1. Interpretação Normativa', '').trim();
              variant = 'norm';
              Icon = BookOpen;
              filterKey = 'normas';
-          } else if (trimmed.startsWith('## 3. Riscos e Inconsistências')) {
-             title = "Riscos e Inconsistências";
-             content = trimmed.replace('## 3. Riscos e Inconsistências', '').trim();
+          } else if (trimmed.startsWith('## 2. Avaliação Técnica')) {
+             title = "Avaliação Técnica";
+             content = trimmed.replace('## 2. Avaliação Técnica', '').trim();
+             variant = 'info';
+             Icon = Cpu;
+             filterKey = 'analise';
+          } else if (trimmed.startsWith('## 3. Riscos e Pontos Críticos')) {
+             title = "Riscos e Pontos Críticos";
+             content = trimmed.replace('## 3. Riscos e Pontos Críticos', '').trim();
              variant = 'warning';
              Icon = AlertTriangle;
              filterKey = 'riscos';
@@ -119,14 +121,14 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, activeFilters })
              variant = 'default';
              Icon = Layers;
              filterKey = 'recomendacoes';
-          } else if (trimmed.startsWith('## 5. Conclusão Objetiva')) {
-             title = "Conclusão";
-             content = trimmed.replace('## 5. Conclusão Objetiva', '').trim();
+          } else if (trimmed.startsWith('## 5. Conclusão Profissional')) {
+             title = "Conclusão Profissional";
+             content = trimmed.replace('## 5. Conclusão Profissional', '').trim();
              variant = 'success';
              Icon = CheckCircle;
              filterKey = 'conclusao';
           } else {
-              // Intro or unstructured text
+              // Backwards compatibility or intro text
               return (
                 <div key={index} className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm text-slate-700 break-inside-avoid">
                   <div className="whitespace-pre-wrap">{formatText(trimmed)}</div>
@@ -241,7 +243,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, activeFilters })
                       <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse delay-75"></div>
                       <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse delay-150"></div>
                     </div>
-                    <span className="text-xs font-mono text-slate-500 uppercase tracking-wide">Processando dados técnicos...</span>
+                    <span className="text-xs font-mono text-slate-500 uppercase tracking-wide">Processando Engenharia...</span>
                  </div>
                ) : (
                  <>
