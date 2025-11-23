@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { Message, Sender, Attachment, FilterKey } from './types';
 import { sendMessageToGemini, fileToGenerativePart, GeminiLiveClient, GenerationOptions } from './services/geminiService';
 import MessageBubble from './components/MessageBubble';
@@ -318,6 +319,8 @@ IMPORTANTE SOBRE A COLUNA 'Ref.':
   return (
     <div className="flex h-screen bg-slate-50 text-slate-900 font-sans overflow-hidden selection:bg-blue-100 selection:text-blue-900">
       
+      <Analytics />
+
       {/* Live Audio Overlay */}
       {isLiveActive && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/90 backdrop-blur-md">
